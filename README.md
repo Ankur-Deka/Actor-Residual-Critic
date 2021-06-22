@@ -1,6 +1,5 @@
 # ARC - Actor Residual Critic for Adversarial Imitation Learning
 Authors: Ankur Deka, Changliu Liu, Katia Sycara
-where `*` indicates equal contribution (order by dice rolling) and `°` equal advising.
 
 ## Installation
 
