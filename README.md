@@ -52,7 +52,7 @@ For ARC aided AIL (ard-f-max-rkl and arc-gail) on walker2d, halfcheetah, ant use
 
 
 ## References
-Standard AIL implementations are borrowed from [f-IRL repository](https://github.com/twni2016/f-IRL) and we developed ARC aided AIL on top of them. In turn, they used the following references for parts of the code:
+Most of the code is borrowed from the [f-IRL repository](https://github.com/twni2016/f-IRL). It had standard AIL algorithms implemented and we developed ARC aided AIL on top of them. In turn, the [f-IRL repository](https://github.com/twni2016/f-IRL) used the following references for parts of the code:
 - [AIRL](https://github.com/justinjfu/inverse_rl) in part of `envs/` 
 - [f-MAX](https://github.com/KamyarGh/rl_swiss/blob/master/run_scripts/adv_smm_exp_script.py) in part of `baselines/`
 - [SAC](https://github.com/openai/spinningup/tree/master/spinup/algos/pytorch/sac) in part of `common/sac`
