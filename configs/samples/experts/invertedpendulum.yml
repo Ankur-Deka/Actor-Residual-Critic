@@ -1,0 +1,18 @@
+seed: 1
+cuda: -1
+env:
+  env_name: InvertedPendulum-v2
+sac:
+  epochs: 20
+  log_step_interval: 1000
+  # update_every: 50
+  update_num: 1
+  random_explore_episodes: 5
+  batch_size: 100
+  lr: 1e-3
+  alpha: 0.2
+  automatic_alpha_tuning: false
+  buffer_size: 1000000
+  num_test_episodes: 10
+expert:
+  samples_episode: 64

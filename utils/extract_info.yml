@@ -1,0 +1,11 @@
+seed: True
+sac:
+    lr: True
+    alpha: True
+    gamma: True
+    normalize_r: True
+adv_irl:
+    disc:
+      model_type: True
+      hid_act: True
+      use_bn: True

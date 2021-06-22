@@ -1,0 +1,29 @@
+seed: 0
+cuda: 0
+render: false
+env:
+  env_name: SimpleTurnFH-v1
+  T: 100
+  state_indices: all
+sac:
+  epochs: 1200
+  log_step_interval: 5000
+  update_every: 50
+  update_num: 1
+  random_explore_episodes: 10
+  batch_size: 100
+  lr: 1e-3
+  alpha: 0.2
+  automatic_alpha_tuning: false
+  buffer_size: 1000000
+  num_test_episodes: 10
+expert:
+  use_pretrained_agent: true #false
+  samples_episode: 2
+reward: # from irl model
+  use_bn: false
+  residual: false
+  hid_act: relu
+  hidden_sizes: [64, 64]
+  clamp_magnitude: 10
+  path:
