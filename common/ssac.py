@@ -349,7 +349,7 @@ class SSAC:
         # called by adv IRL
         # First run one gradient descent step for Q1 and Q2
         # reward_model is passed by ARC-AIRL
-        if not self.objective.starswith('naive-diff'): # residual critic not required for naive-diff
+        if not self.objective.startswith('naive-diff'): # residual critic not required for naive-diff
             for i in range(self.q_per_step):
                 self.q_optimizer.zero_grad()
                 loss_q = self.compute_loss_q(data, discrim)
@@ -367,7 +367,7 @@ class SSAC:
         self.pi_optimizer.zero_grad()
         
         loss_pi_ent, loss_pi_r, loss_pi_q, log_pi = self.compute_loss_pi(data, discrim)
-        if self.objective.starswith('naive-diff'):
+        if self.objective.startswith('naive-diff'):
             loss_pi = loss_pi_ent + loss_pi_r
         else:
             loss_pi = loss_pi_ent + loss_pi_r + loss_pi_q
