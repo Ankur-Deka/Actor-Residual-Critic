@@ -64,4 +64,4 @@ We also use the expert data from [f-IRL repository](https://github.com/twni2016/
 
 ## Code changes
 
-Major change from standard AIL algorithms (f-max-rkl, gail) to ARC aided AIL (arc-f-max-rkl, arc-gail) algorithms was in replacing standard SAC code (`common/sac.py`) with SARC code (`common/sarc.py`). This was relatively simple to implement. We used the same networks to estimate the C function in SARC instead of the Q function in SAC. Other changes made were in `baselines/main_samples.py` and `baselines/adv_smm`.
+Major change from standard AIL algorithms (f-max-rkl, gail) to ARC aided AIL (arc-f-max-rkl, arc-gail) algorithms was in replacing standard SAC code (`common/sac.py`) with SARC code (`common/sarc.py`). This was relatively simple to implement. We used the same networks to estimate the C function in SARC instead of the Q function in SAC. Other changes made were in `baselines/main_samples.py` and `baselines/adv_smm.py`.
