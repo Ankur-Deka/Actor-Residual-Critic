@@ -15,7 +15,8 @@ Anonymous Authors
 
 ## File Structure
 - AIL algorithms (standard and ARC aided): `baselines/`
-- SAC agent: `common/`
+- SAC agent: `common/sac.py`
+- SARC agent: `common/sarc.py`
 - Environments: `envs/`
 - Configurations: `configs/`
 
@@ -23,11 +24,11 @@ Anonymous Authors
 - All the experiments are to be run under the root folder. 
 - Before starting experiments, please `export PYTHONPATH=${PWD}:$PYTHONPATH` for env variable. 
 - We use yaml files in `configs/` for experimental configurations, please change `obj` value (in the first line) for each method, here is the list of `obj` values:
-    -  arc-f-max-rkl
-    -  f-max-rkl
+    -  arc-f-max-rkl: ARC-f-MAX-RKL (Our)
+    -  f-max-rkl: f-MAX-RKL (Standard AIL)
     -  naive-diff-f-max-rkl
-    -  arc-gail
-    -  gail
+    -  arc-gail: ARC-GAIL (Our)
+    -  gail: GAIL (Standard AIL)
     -  naive-diff-gail
     -  bc
 - Please keep all the other values in yaml files unchanged to reproduce the results in our paper.
@@ -53,10 +54,14 @@ For ARC aided AIL (arc-f-max-rkl and arc-gail) on walker2d, halfcheetah, ant use
 
 
 ## References
-Most of the code is borrowed from the [f-IRL repository](https://github.com/twni2016/f-IRL). It had standard AIL algorithms implemented and we developed ARC aided AIL on top of them. In turn, the [f-IRL repository](https://github.com/twni2016/f-IRL) used the following references for parts of the code:
+Most of the code is borrowed from the [f-IRL repository](https://github.com/twni2016/f-IRL). It had standard AIL algorithms (f-max-rkl, gail) implemented and we developed ARC aided AIL on top of them. In turn, the [f-IRL repository](https://github.com/twni2016/f-IRL) used the following references for parts of the code:
 - [AIRL](https://github.com/justinjfu/inverse_rl) in part of `envs/` 
 - [f-MAX](https://github.com/KamyarGh/rl_swiss/blob/master/run_scripts/adv_smm_exp_script.py) in part of `baselines/`
 - [SAC](https://github.com/openai/spinningup/tree/master/spinup/algos/pytorch/sac) in part of `common/sac`
 - [NPEET](https://github.com/gregversteeg/NPEET) in part of `utils/it_estimator.py`
 
 We also use the expert data from [f-IRL repository](https://github.com/twni2016/f-IRL).
+
+## Code changes
+
+Major change from standard AIL algorithms (f-max-rkl, gail) to ARC aided AIL (arc-f-max-rkl, arc-gail) algorithms was in replacing standard SAC code (`common/sac.py`) with SARC code (`common/sarc.py`). This was relatively simple to implement. We used the same networks to estimate the C function in SARC instead of the Q function in SAC. Other changes made were in `baselines/main_samples.py` and `baselines/adv_smm`.
