@@ -1,23 +1,20 @@
 # ARC - Actor Residual Critic for Adversarial Imitation Learning
-Authors: Ankur Deka, Changliu Liu, Katia Sycara
+Anonymous Authors
 
 ## Installation
 
 - PyTorch 1.5+
 - OpenAI Gym (0.15+)
-  `pip install gym[box2d]` - required for lunar lander
 - [MuJoCo](https://www.roboti.us/license.html)
 - `pip install sklearn seaborn ruamel.yaml`
-- `pip3 install pybullet --upgrade --user` for pybullet for InvertedPendulum (continuous) 
 - Download expert data that are used in our paper from [Google Drive](https://drive.google.com/drive/folders/1HJBV0HRi3B0KcbRAX5BOudkEYKj8ts4Q?usp=sharing) as `expert_data/` folder
-  - `states/`: expert state trajectories for each environment. We obtain two sets of state trajectories for our method/MaxEntIRL/f-MAX (`*.pt`) and AIRL (`*_airl.pt`), respectively.
-  - `actions/`: expert action trajectories for each environment for AIRL (`*_airl.pt`)
+  - `states/`: expert state trajectories for each environment
+  - `actions/`: expert action trajectories for each environment
   - `meta/`: meta information including expert reward curves through training
 
 
 ## File Structure
-- ARC (Our method): `firl/`
-- Baselines (f-MAX, BC): `baselines/`
+- AIL algorithms (standard and ARC aided): `baselines/`
 - SAC agent: `common/`
 - Environments: `envs/`
 - Configurations: `configs/`
@@ -46,9 +43,13 @@ First, make sure that you have downloaded expert data into `expert_data/`.  [Dat
 python common/train_expert.py configs/samples/experts/{file}.yml # env is in {hopper, walker2d, halfcheetah, ant}
 ```
 
-For standard AIL algorithms (f-max-rkl and gail) on walker2d, halfcheetah, ant, use standard_ail.yml. Use standard_ail_halfcheetah for halfcheetah.
+Then run the following command:
+```
+python baselines/main_samples.py configs/samples/agents/{file}.yml
+```
+For standard AIL algorithms (f-max-rkl and gail) on walker2d, halfcheetah, ant, use `standard_ail.yml`. Use `standard_ail_halfcheetah.yml` for halfcheetah.
 
-For ARC aided AIL (ard-f-max-rkl and arc-gail) on walker2d, halfcheetah, ant use arc_ail.yml. Use arc_ail_halfcheetah.yml for halfcheetah.
+For ARC aided AIL (arc-f-max-rkl and arc-gail) on walker2d, halfcheetah, ant use `arc_ail.yml`. Use `arc_ail_halfcheetah.yml for halfcheetah`. Use the same config files for naive-diff-f-max-rkl and naive-diff-gail.
 
 
 ## References

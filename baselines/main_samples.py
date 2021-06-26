@@ -7,7 +7,7 @@ import envs
 
 import torch
 from common.sac import SAC
-from common.ssac import SSAC
+from common.sarc import SARC
 from baselines.discrim import ResNetAIRLDisc, MLPDisc
 from baselines.adv_smm import AdvSMM
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     print(f"Logging to directory: {log_folder}")
     os.system(f'cp baselines/main_samples.py {log_folder}')
     os.system(f'cp baselines/adv_smm.py {log_folder}')
-    os.system(f'cp common/ssac.py {log_folder}')
+    os.system(f'cp common/sarc.py {log_folder}')
     os.system(f'cp baselines/discrim.py {log_folder}')
     os.system(f'cp {sys.argv[1]} {log_folder}/variant_{pid}.yml')
     print('pid', os.getpid())
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         ).to(device)
         
     if v['obj'] in ['arc-f-max-rkl', 'arc-gail', 'arc-airl', 'arc-fairl', 'naive-diff-gail', 'naive-diff-f-max-rkl']:
-        agent = SSAC(env_fn, None, 
+        agent = SARC(env_fn, None, 
             steps_per_epoch=v['env']['T'],
             max_ep_len=v['env']['T'],
             seed=seed,

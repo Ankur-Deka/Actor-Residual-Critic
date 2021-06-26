@@ -77,7 +77,7 @@ class ReplayBuffer:
         return {k: torch.as_tensor(v, dtype=torch.float32).to(self.device) for k,v in batch.items()}
 
 
-class SSAC:
+class SARC:
 
     def __init__(self, env_fn, replay_buffer, k=1, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0, 
             steps_per_epoch=4000, epochs=100, replay_size=int(1e6), gamma=0.99, add_time=False,
