@@ -185,5 +185,4 @@ dependencies:
     - wrapt==1.12.1
     - yml==0.0.1
     - zipp==3.4.0
-prefix: /home/ankur/anaconda3/envs/drl-pytorch
 
