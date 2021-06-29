@@ -84,7 +84,7 @@ adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.ya
   disc_momentum: 0.0
   use_grad_pen: true
   grad_pen_weight: 4.0  # [2.0, 4.0, 8.0, 16.0]
-  reward_scale: 0.2  # [2.0, 4.0, 8.0, 16.0]
+  reward_scale: 1  # [2.0, 4.0, 8.0, 16.0]
   save_interval: 0
   eval_interval: 200
   replay_buffer_size: 200000
