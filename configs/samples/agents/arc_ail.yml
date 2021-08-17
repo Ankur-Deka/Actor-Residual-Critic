@@ -63,7 +63,7 @@ critic:
   num_layer_blocks: 3
   hid_dim: 128
   hid_act: tanh
-  use_bn: false
+  use_bn: true
   batch_size: 800
   lr: 0.0003
   weight_decay: 0.0001
@@ -93,6 +93,6 @@ adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.ya
     num_layer_blocks: 2
     hid_dim: 128
     hid_act: leaky_relu
-    use_bn: false
+    use_bn: true
     clamp_magnitude: 10.0
 
