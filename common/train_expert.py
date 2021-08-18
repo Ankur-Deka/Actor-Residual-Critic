@@ -98,8 +98,8 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
             expert_actions[n, t, :] = torch.from_numpy(action).clone()
             ret += rew
             t += 1
-            env.render()
-            time.sleep(0.1)
+            # env.render()
+            # time.sleep(0.1)
             
             # t_max = max(t_max,t)
         returns.append(ret)

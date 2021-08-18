@@ -7,7 +7,7 @@ env = gym.make('PlanarReachGoal1DenseFH-v0')
 print(env.__dict__)
 obs = env.reset()
 
-def p_controller(obs, gain=20, max_val=1):
+def p_controller(obs, gain=30, max_val=1):
     action = np.clip(gain*obs, -max_val, max_val)
     return action
 
@@ -20,11 +20,11 @@ for episode in range(10):
         a = env.action_space.sample()
 
         a = p_controller(obs)
-        ic(a.round(2),obs.round(2))
+        # ic(a.round(2),obs.round(2))
         obs,rew,done,info = env.step(a)
         r_total += rew
         # print(np.round(obs,2))
-        print(rew)
+        # print(rew)
         env.render()
         # time.sleep(0.1)
 print(r_total/10)

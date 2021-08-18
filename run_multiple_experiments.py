@@ -2,7 +2,7 @@ import os
 import multiprocessing
 import time
 
-fPath = 'configs/samples/agents/walker2d_gail.yml'
+fPath = 'configs/samples/agents/standard_ail.yml'
 file = open(fPath)
 lines = file.readlines()
 file.close()
