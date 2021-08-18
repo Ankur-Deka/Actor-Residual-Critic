@@ -60,6 +60,14 @@ register(
 )
 
 register(
+    id='PlanarPushGoal1DenseFH-v0',
+    entry_point='envs.mujocoFH:PushFH',
+    kwargs=dict(
+        env_name='PlanarPushGoal1Dense-v1'
+    )
+)
+
+register(
     id='LunarLanderContinuousFH-v0',
     entry_point='envs.mujocoFH:MujocoFH',
     kwargs=dict(

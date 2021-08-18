@@ -134,3 +134,70 @@ class FetchFH(MujocoFH):
         return self.obs.copy(),reward,done,info    
 
 
+
+class PushFH(MujocoFH):
+    def __init__(self,*args,**kwargs):
+        super(PushFH,self).__init__(*args,**kwargs)
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=[2], dtype='float32')  
+        self.action_space = spaces.Box(-1., 1., shape=(2,), dtype='float32')
+        self.reset()
+
+    # use fixed goal
+    def extract_relative_goal_pos(self, obs):    
+        grip_pos = obs['observation'][:2] # x.y,z position
+        goal_pos_rel = self.goal - grip_pos
+        return goal_pos_rel
+
+    def extract_object_rot(self, obs):
+        object_rot = obs['observation'][11:14]
+        return object_rot.copy()
+
+    def reset(self):
+        self.t = 0
+        self.terminated = False
+        self.terminal_state = None
+        obs = self.env.reset()
+        
+        gripper_pos = self.env.initial_gripper_xpos[:2]
+        # ---------- set object position ---------- #
+        object_qpos = self.env.env.sim.data.get_joint_qpos('object0:joint')
+        object_qpos[:2] = gripper_pos + [0.1,0.15] + np.random.normal(scale=0.01, size=2)
+        self.env.env.sim.data.set_joint_qpos('object0:joint', object_qpos)
+        
+        # ---------- set goal position ---------- #
+        goal_pos_rel = np.array([0.1,-0.15]) + np.random.normal(scale=0.01, size=2)
+        goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
+        self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
+        self.goal = self.env.env.goal[:2]
+
+        # ---------- set observation (goal_pos_rel, object_rot) ---------- #
+        object_rot = self.extract_object_rot(obs)
+        self.obs = np.concatenate((goal_pos_rel, object_rot))
+        return self.obs.copy()
+
+    def step(self, action):
+        self.t += 1
+
+        if self.terminated:
+            return self.terminal_state, 0, self.t == self.T, True
+        else:
+            prev_obs = self.obs.copy()
+            action = np.concatenate((action,np.zeros(2)))
+            obs, r, done, info = self.env.step(action)
+           
+            goal_pos_rel = self.extract_relative_goal_pos(obs) 
+            object_rot = self.extract_object_rot(obs)
+            self.obs = np.concatenate((goal_pos_rel, object_rot))
+            # self.obs = self.normalize_obs(self.obs)
+            
+            if self.r is not None:  # from irl model
+                r = self.r(prev_obs)
+
+            if done:
+                self.terminated = True
+                self.terminal_state = self.obs
+            
+            return self.obs.copy(), r, done, done
+        # print(self.obs)
+        return self.obs.copy(),reward,done,info    
+
