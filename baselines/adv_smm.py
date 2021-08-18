@@ -629,7 +629,7 @@ class AdvSMM:
 
         if not self.expert_IS:
             real_return_det = eval.evaluate_real_return(self.agent.get_action, self.test_env, 
-                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=True)
+                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=False)
             metrics["Real Det Return"] = real_return_det
             print(f"real det return avg: {real_return_det:.2f}")
             self.logger.record_tabular("Real Det Return", round(real_return_det, 2))

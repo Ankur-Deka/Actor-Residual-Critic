@@ -2,12 +2,12 @@ import os
 import multiprocessing
 import time
 
-fPath = 'configs/samples/agents/standard_ail.yml'
+fPath = 'configs/samples/agents/arc_ail_robot.yml'
 file = open(fPath)
 lines = file.readlines()
 file.close()
 
-seeds = [0]
+seeds = [0,1,2,3]
 # seeds = [0]
 # envs = ['Walker2dFH-v0', 'HopperFH-v0', 'AntFH-v0']
 envs = ['PlanarReachGoal1DenseFH-v0']
