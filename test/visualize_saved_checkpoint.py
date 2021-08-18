@@ -36,6 +36,7 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
         while t<env_T:
             # print(t)
             action = policy(obs, deterministic)
+            # action = np.array([1,0])
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
             if done:
                 rew = 0 if stored_terminal_rew else rew
