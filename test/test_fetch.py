@@ -1,8 +1,10 @@
 import gym
+print(gym)
 from icecream import ic
 
 env = gym.make('FetchReach-v1')
-ic(env.state_space(), env.action_space())
+ic(env.__dict__)
+#ic(env.state_space(), env.action_space())
 
 
 
