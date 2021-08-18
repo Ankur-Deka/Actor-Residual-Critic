@@ -52,6 +52,14 @@ register(
 )
 
 register(
+    id='PlanarReachGoal1DenseFH-v0',
+    entry_point='envs.mujocoFH:FetchFH',
+    kwargs=dict(
+        env_name='PlanarReachGoal1Dense-v1'
+    )
+)
+
+register(
     id='LunarLanderContinuousFH-v0',
     entry_point='envs.mujocoFH:MujocoFH',
     kwargs=dict(
