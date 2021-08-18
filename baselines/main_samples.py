@@ -56,7 +56,8 @@ if __name__ == "__main__":
     with open(os.path.join(logger.get_dir(), 'variant.json'), 'w') as f:
         json.dump(v, f, indent=2, sort_keys=True)
     # os.makedirs(os.path.join(log_folder, 'plt'))
-    os.makedirs(os.path.join(log_folder, 'model'))
+    os.makedirs(os.path.join(log_folder, 'model')) # discriminator?
+    os.makedirs(os.path.join(log_folder, 'agent')) # RL agent
 
     # environment
     env_fn = lambda: gym.make(env_name)

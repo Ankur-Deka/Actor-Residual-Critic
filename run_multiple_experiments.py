@@ -10,7 +10,7 @@ file.close()
 seeds = [0]
 # seeds = [0]
 # envs = ['Walker2dFH-v0', 'HopperFH-v0', 'AntFH-v0']
-envs = ['SimpleTurnFH-v0']
+envs = ['PlanarReachGoal1DenseFH-v0']
 process_list = []
 
 def run_experiment():

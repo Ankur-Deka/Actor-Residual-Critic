@@ -629,7 +629,7 @@ class AdvSMM:
 
         if not self.expert_IS:
             real_return_det = eval.evaluate_real_return(self.agent.get_action, self.test_env, 
-                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=False)
+                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=True)
             metrics["Real Det Return"] = real_return_det
             print(f"real det return avg: {real_return_det:.2f}")
             self.logger.record_tabular("Real Det Return", round(real_return_det, 2))
@@ -639,6 +639,9 @@ class AdvSMM:
             metrics["Real Sto Return"] = real_return_sto
             print(f"real sto return avg: {real_return_sto:.2f}")
             self.logger.record_tabular("Real Sto Return", round(real_return_sto, 2))
+
+            agent_save_name = os.path.join(self.logger.get_dir(), 'agent',f'env_steps_{env_steps}.pt')
+            torch.save(self.agent.ac.state_dict(), agent_save_name)
 
             if real_return_det > self.max_real_return_det and real_return_sto > self.max_real_return_sto:
                 self.max_real_return_det, self.max_real_return_sto = real_return_det, real_return_sto

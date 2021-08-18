@@ -102,7 +102,7 @@ class FetchFH(MujocoFH):
         self.terminal_state = None
         obs = self.env.reset()
         # self.obs = self.normalize_obs(self.obs)
-        goal_pos_rel = np.array([0.15,0])
+        goal_pos_rel = np.array([0.15,0]) + np.random.normal(scale=0.01, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
         # ic(self.env.goal)
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
