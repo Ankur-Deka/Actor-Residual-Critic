@@ -8,7 +8,7 @@ import numpy as np
 # for name in names:
 #     print(name)
 
-env = gym.make('PlanarPushGoal1DenseFH-v0')
+env = gym.make('PlanarPushGoal1DenseFH-v0', T=10)
 
 
 # print(env.__dict__)
@@ -34,8 +34,10 @@ for episode in range(10):
     # goal_pos_rel = np.array([0.1,-0.15]) + np.random.normal(scale=0.01, size=2)
     # goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
     # env.env.goal = env.initial_gripper_xpos[:3] + goal_pos_rel_3d
-
-    for t in range(20):
+    t = 0
+    while not done:
+        print(t)
+        t+=1
         a = env.action_space.sample()
         a[:] = 0
         a[1] = 1
@@ -54,12 +56,13 @@ for episode in range(10):
 #         a = p_controller(obs)
 #         # ic(a.round(2),obs.round(2))
         obs,rew,done,info = env.step(a)
+        print(env.T)
 #         r_total += rew
 #         # print(np.round(obs,2))
 #         # print(rew)
-        ic(obs.round(2))
+        # ic(obs.round(2))
         # obs = obs['observation']
         # ic(obs[6:9], obs[11:14])
         env.render()
-        time.sleep(0.1)
+        # time.sleep(0.1)
 # print(r_total/10)

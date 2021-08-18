@@ -138,7 +138,7 @@ class FetchFH(MujocoFH):
 class PushFH(MujocoFH):
     def __init__(self,*args,**kwargs):
         super(PushFH,self).__init__(*args,**kwargs)
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=[2], dtype='float32')  
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=[5], dtype='float32')  
         self.action_space = spaces.Box(-1., 1., shape=(2,), dtype='float32')
         self.reset()
 
