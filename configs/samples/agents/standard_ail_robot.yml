@@ -1,4 +1,4 @@
-obj: f-max-rkl #f-max-rkl or gail
+obj: arc-f-max-rkl #f-max-rkl or gail
 IS: false
 seed: 0
 cuda: -1
@@ -11,8 +11,8 @@ irl:
   training_trajs: 10
   n_itrs: 1500
   save_interval: 0
-  eval_episodes: 20
-  expert_episodes: 1
+  eval_episodes: 1
+  expert_episodes: 64
   resample_episodes: 10
 bc:
   epochs: 10000
@@ -28,12 +28,12 @@ sac:
   update_num: 1
   batch_size: 100
   lr: 1e-3
-  alpha: 0.05
+  alpha: 0.2
   automatic_alpha_tuning: false
   buffer_size: 10000
   num_test_episodes: 1
   reinitialize: false
-
+  q_per_step: 1
 reward:
   use_bn: false
   residual: false
@@ -63,7 +63,7 @@ critic:
   num_layer_blocks: 3
   hid_dim: 128
   hid_act: tanh
-  use_bn: false
+  use_bn: true
   batch_size: 800
   lr: 0.0003
   weight_decay: 0.0001
@@ -71,7 +71,7 @@ critic:
   iter: 1200
 adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.yaml
   normalize: false #true
-  num_epochs: 10
+  num_epochs: 1000
   num_steps_per_epoch: 1000
   num_steps_between_train_calls: 10
   min_steps_before_training: 100
