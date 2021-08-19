@@ -44,10 +44,11 @@ def hand_coded_push_policy(env, obs, t, gain=10, max_val=1):
     object_initial_pose = object_initial_pose_absolute - origin_pos
     goal_absolute = env.goal
     goal = goal_absolute - origin_pos
-    waypoints = [[0,0.25],
+    waypoints = [[-0.15,0],
+                 [-0.15,0.25],
                  [object_initial_pose[0],0.2],
                  [object_initial_pose[0],goal[1]+0.03]]
-    waypoint_timesteps = [10,20,100]
+    waypoint_timesteps = [10,20,30,100]
     i = 0
     while(waypoint_timesteps[i]<=t):
         i+=1

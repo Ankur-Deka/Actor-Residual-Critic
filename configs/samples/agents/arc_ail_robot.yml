@@ -4,8 +4,8 @@ seed: 0
 cuda: -1
 experiment_tag: 32_traj_10_resample_seed_2
 env:
-  env_name: PlanarReachGoal1DenseFH-v0
-  T: 20
+  env_name: PlanarPushGoal1DenseFH-v0
+  T: 100
   state_indices: all
 irl:
   training_trajs: 10
@@ -17,7 +17,7 @@ irl:
 bc:
   epochs: 10000
   eval_freq: 100
-  eval_episodes: 20
+  eval_episodes: 2
   expert_episodes: 1
 sac:
   k: 1
@@ -28,7 +28,7 @@ sac:
   update_num: 1
   batch_size: 100
   lr: 1e-3
-  alpha: 1
+  alpha: 0.1
   automatic_alpha_tuning: false
   buffer_size: 10000
   num_test_episodes: 1
@@ -71,7 +71,7 @@ critic:
   iter: 1200
 adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.yaml
   normalize: false #true
-  num_epochs: 1000
+  num_epochs: 10000
   num_steps_per_epoch: 1000
   num_steps_between_train_calls: 100
   min_steps_before_training: 1000
