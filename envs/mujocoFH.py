@@ -152,6 +152,10 @@ class PushFH(MujocoFH):
         object_rot = obs['observation'][11:14]
         return object_rot.copy()
 
+    def extract_relative_object_pos(self, obs):
+        object_pos_rel = obs['observation'][6:8]
+        return object_pos_rel
+
     def reset(self):
         self.t = 0
         self.terminated = False
@@ -186,8 +190,10 @@ class PushFH(MujocoFH):
             obs, r, done, info = self.env.step(action)
            
             goal_pos_rel = self.extract_relative_goal_pos(obs) 
+            
+            object_pos_rel = self.extract_relative_object_pos(obs)
             object_rot = self.extract_object_rot(obs)
-            self.obs = np.concatenate((goal_pos_rel, object_rot))
+            self.obs = np.concatenate((object_pos_rel, object_rot, goal_pos_rel))
             # self.obs = self.normalize_obs(self.obs)
             
             if self.r is not None:  # from irl model

@@ -36,11 +36,11 @@ for episode in range(10):
     # env.env.goal = env.initial_gripper_xpos[:3] + goal_pos_rel_3d
     t = 0
     while not done:
-        print(t)
+        # print(t)
         t+=1
         a = env.action_space.sample()
-        a[:] = 0
-        a[1] = 1
+        # a[:] = 0
+        # a[1] = 1
 # # ---------- getting env name ---------- #
 # # env_dict = gym.envs.registry.all()
 # # for k in env_dict:
@@ -56,7 +56,8 @@ for episode in range(10):
 #         a = p_controller(obs)
 #         # ic(a.round(2),obs.round(2))
         obs,rew,done,info = env.step(a)
-        print(env.T)
+        print(obs.round(2))
+        # print(env.T)
 #         r_total += rew
 #         # print(np.round(obs,2))
 #         # print(rew)
