@@ -175,8 +175,9 @@ class PushFH(MujocoFH):
         self.goal = self.env.env.goal[:2]
 
         # ---------- set observation (goal_pos_rel, object_rot) ---------- #
+        object_pos_rel = self.extract_relative_object_pos(obs)
         object_rot = self.extract_object_rot(obs)
-        self.obs = np.concatenate((goal_pos_rel, object_rot))
+        self.obs = np.concatenate((object_pos_rel, object_rot, goal_pos_rel))
         return self.obs.copy()
 
     def step(self, action):
@@ -189,10 +190,9 @@ class PushFH(MujocoFH):
             action = np.concatenate((action,np.zeros(2)))
             obs, r, done, info = self.env.step(action)
            
-            goal_pos_rel = self.extract_relative_goal_pos(obs) 
-            
             object_pos_rel = self.extract_relative_object_pos(obs)
             object_rot = self.extract_object_rot(obs)
+            goal_pos_rel = self.extract_relative_goal_pos(obs) 
             self.obs = np.concatenate((object_pos_rel, object_rot, goal_pos_rel))
             # self.obs = self.normalize_obs(self.obs)
             
