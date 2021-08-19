@@ -2,7 +2,7 @@ seed: 1
 cuda: 0
 env:
   env_name: PlanarPushGoal1DenseFH-v0
-  T: 100
+  T: 20
   state_indices: all
 sac:
   epochs: 300

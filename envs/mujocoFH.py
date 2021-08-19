@@ -138,7 +138,7 @@ class FetchFH(MujocoFH):
 class PushFH(MujocoFH):
     def __init__(self,*args,**kwargs):
         super(PushFH,self).__init__(*args,**kwargs)
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=[7], dtype='float32')  
+        self.observation_space = spaces.Box(-np.inf, np.inf, shape=[4], dtype='float32')  
         self.action_space = spaces.Box(-1., 1., shape=(2,), dtype='float32')
         self.reset()
 
@@ -165,19 +165,19 @@ class PushFH(MujocoFH):
         gripper_pos = self.env.initial_gripper_xpos[:2]
         # ---------- set object position ---------- #
         object_qpos = self.env.env.sim.data.get_joint_qpos('object0:joint')
-        object_qpos[:2] = gripper_pos + [0,0.15] + np.random.normal(scale=0.01, size=2)
+        object_qpos[:2] = gripper_pos + [0,-0.1] + np.random.normal(scale=0.01, size=2)
         self.env.env.sim.data.set_joint_qpos('object0:joint', object_qpos)
         self.object_initial_pos = object_qpos[:2]
         # ---------- set goal position ---------- #
-        goal_pos_rel = np.array([0,-0.15]) + np.random.normal(scale=0.01, size=2)
+        goal_pos_rel = np.array([0,-0.3]) + np.random.normal(scale=0.01, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
         self.goal = self.env.env.goal[:2]
 
         # ---------- set observation (goal_pos_rel, object_rot) ---------- #
         object_pos_rel = self.extract_relative_object_pos(obs)
-        object_rot = self.extract_object_rot(obs)
-        self.obs = np.concatenate((object_pos_rel, object_rot, goal_pos_rel))
+        # object_rot = self.extract_object_rot(obs)
+        self.obs = np.concatenate((object_pos_rel, goal_pos_rel))
         return self.obs.copy()
 
     def step(self, action):
@@ -193,7 +193,7 @@ class PushFH(MujocoFH):
             object_pos_rel = self.extract_relative_object_pos(obs)
             object_rot = self.extract_object_rot(obs)
             goal_pos_rel = self.extract_relative_goal_pos(obs) 
-            self.obs = np.concatenate((object_pos_rel, object_rot, goal_pos_rel))
+            self.obs = np.concatenate((object_pos_rel, goal_pos_rel))
             # self.obs = self.normalize_obs(self.obs)
             
             if self.r is not None:  # from irl model
