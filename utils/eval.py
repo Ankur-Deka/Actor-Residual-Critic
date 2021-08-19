@@ -34,7 +34,7 @@ def evaluate_real_return(policy, env, n_episodes, horizon, deterministic, render
         ret = 0
         for t in range(horizon):
             action = policy(obs, deterministic)
-            print(action, 'eval.py')
+            # print(action, 'eval.py')
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
             ret += rew
             if render:

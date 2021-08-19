@@ -194,9 +194,9 @@ class AdvSMM:
             for steps_this_epoch in range(self.num_steps_per_epoch):
                 # print(steps_this_epoch)
                 a = self.agent.get_action(o) # now assumes no early random exploration
-                print(a, 'adv_smm.py')
+                # print(a, 'adv_smm.py')
                 o2, r, d, _ = self.env.step(a) # reward is set by discrimator, not here
-                self.env.render()
+                # self.env.render()
                 
                 ep_len += 1
                 self._n_env_steps_total += 1
@@ -631,7 +631,7 @@ class AdvSMM:
 
         if not self.expert_IS:
             real_return_det = eval.evaluate_real_return(self.agent.get_action, self.test_env, 
-                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=True)
+                                        self.v['irl']['eval_episodes'], self.v['env']['T'], True, render=False)
             metrics["Real Det Return"] = real_return_det
             print(f"real det return avg: {real_return_det:.2f}")
             self.logger.record_tabular("Real Det Return", round(real_return_det, 2))
