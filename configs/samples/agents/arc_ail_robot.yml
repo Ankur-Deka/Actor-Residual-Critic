@@ -1,6 +1,6 @@
-obj: arc-f-max-rkl #f-max-rkl or gail
+obj: arc-gail
 IS: false
-seed: 2
+seed: 0
 cuda: -1
 experiment_tag: 32_traj_10_resample_seed_2
 env:
@@ -73,8 +73,8 @@ adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.ya
   normalize: false #true
   num_epochs: 1000
   num_steps_per_epoch: 1000
-  num_steps_between_train_calls: 10
-  min_steps_before_training: 100
+  num_steps_between_train_calls: 100
+  min_steps_before_training: 1000
   num_update_loops_per_train_call: 10
   num_disc_updates_per_loop_iter: 1
   num_policy_updates_per_loop_iter: 1
