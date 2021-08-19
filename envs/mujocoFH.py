@@ -167,7 +167,7 @@ class PushFH(MujocoFH):
         object_qpos = self.env.env.sim.data.get_joint_qpos('object0:joint')
         object_qpos[:2] = gripper_pos + [0.1,0.15] + np.random.normal(scale=0.01, size=2)
         self.env.env.sim.data.set_joint_qpos('object0:joint', object_qpos)
-        
+        self.object_initial_pos = object_qpos[:2]
         # ---------- set goal position ---------- #
         goal_pos_rel = np.array([0.1,-0.15]) + np.random.normal(scale=0.01, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))

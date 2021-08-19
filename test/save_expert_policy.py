@@ -38,6 +38,25 @@ def p_controller(obs, gain=30, max_val=1):
 #         # time.sleep(0.1)
 # print(r_total/10)
 
+def hand_coded_push_policy(env, obs, t, gain=10, max_val=1):
+    origin_pos = env.env.initial_gripper_xpos[:2]
+    object_initial_pose_absolute = env.object_initial_pos
+    object_initial_pose = object_initial_pose_absolute - origin_pos
+    goal_absolute = env.goal
+    goal = goal_absolute - origin_pos
+    waypoints = [[0,0.25],
+                 [object_initial_pose[0],0.2],
+                 [object_initial_pose[0],goal[1]+0.03]]
+    waypoint_timesteps = [10,20,100]
+    i = 0
+    while(waypoint_timesteps[i]<=t):
+        i+=1
+    cur_waypoint = waypoints[i]
+    grip_pos_absolute = env.env.env.sim.data.get_site_xpos('robot0:grip')[:2]
+
+    gripper_pos = grip_pos_absolute - origin_pos
+    return p_controller(cur_waypoint-gripper_pos, gain, max_val)
+
 
 def evaluate_policy(policy, env, n_episodes):
     obs_dim = env.observation_space.shape[0]
@@ -57,7 +76,9 @@ def evaluate_policy(policy, env, n_episodes):
         print(env.goal)
         # while not done and t<env_T:
         while t<env_T:
-            action = policy(obs)
+            # action = policy(obs)
+            action = policy(env,obs,t)
+            # action[:] = 0
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
             if done:
                 rew = 0 if stored_terminal_rew else rew
@@ -66,7 +87,7 @@ def evaluate_policy(policy, env, n_episodes):
             expert_actions[n, t, :] = torch.from_numpy(action).clone()
             ret += rew
             t += 1
-            env.render()
+            # env.render()
             # time.sleep(0.1)
             
             # t_max = max(t_max,t)
@@ -96,8 +117,8 @@ if __name__ == "__main__":
     else: 
         EnvCls = lambda : gym.make(env_name, T=env_T)
     
-    policy = p_controller
-    
+    # policy = p_controller
+    policy = hand_coded_push_policy
     env = EnvCls()
     env.seed(seed+1)
 
