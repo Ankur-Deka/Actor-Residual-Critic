@@ -56,9 +56,12 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
 
 if __name__ == "__main__":
     yaml = YAML()
-    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs/PlanarReachGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_18_01_57_16'
-    config_file = 'variant_21139.yml'
-    ckpt_file = 'env_steps_9000.pt'
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs/PlanarReachGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_18_01_57_16'
+    # config_file = 'variant_21139.yml'
+    # ckpt_file = 'env_steps_9000.pt'
+    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_19_01_06_32'
+    config_file = 'variant_44973.yml'
+    ckpt_file = 'env_steps_26000.pt'
     v = yaml.load(open(os.path.join(root_dir,config_file)))
 
     # common parameters
