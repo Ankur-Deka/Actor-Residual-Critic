@@ -120,14 +120,10 @@ if __name__ == "__main__":
     env = EnvCls()
     env.seed(seed+1)
 
-    # expert_states_sto, expert_actions_sto, expert_returns = evaluate_policy(policy, env, v['expert']['samples_episode'])
-    # return_info = f'Expert(Sto) Return Avg: {expert_returns.mean():.2f}, std: {expert_returns.std():.2f}'
-    # print(return_info)
-
+    
     log_txt = open(f"expert_data/meta/{env_name}_{seed}.txt", 'w')
-    # log_txt.write(return_info + '\n')
-    # log_txt.write(repr(expert_returns)+'\n')
-
+    log_txt.write(return_info + '\n')
+    
     # sns.violinplot(data=expert_returns, ax=axs[1])
     # axs[1].set_title("violin plot of expert return")
     # plt.savefig(os.path.join(f'expert_data/meta/{env_name}_{seed}.png')) 
@@ -137,18 +133,11 @@ if __name__ == "__main__":
     print(return_info)
     log_txt.write(return_info + '\n')
     log_txt.write(repr(expert_returns)+'\n')
-
     log_txt.write(repr(v))
-
     os.makedirs('expert_data/states/', exist_ok=True)
     os.makedirs('expert_data/actions/', exist_ok=True)
-    # os.makedirs('expert_data/policies/', exist_ok=True)
-    # torch.save(expert_states_sto, f'expert_data/states/{env_name}_sto.pt')
     torch.save(expert_states_det, f'expert_data/states/{env_name}_det.pt')
     torch.save(expert_states_det, f'expert_data/states/{env_name}_airl.pt')
 
-    # torch.save(expert_actions_sto, f'expert_data/actions/{env_name}_sto.pt')
     torch.save(expert_actions_det, f'expert_data/actions/{env_name}_det.pt')
     torch.save(expert_actions_det, f'expert_data/actions/{env_name}_airl.pt')
-
-    # torch.save(agent.ac.state_dict(), f'expert_data/policies/{env_name}.pt')

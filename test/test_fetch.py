@@ -3,6 +3,7 @@ import envs
 # from gym import envs
 from icecream import ic
 import numpy as np
+import copy
 
 # names = envs.registry.all()
 # for name in names:
@@ -35,12 +36,16 @@ for episode in range(10):
     # goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
     # env.env.goal = env.initial_gripper_xpos[:3] + goal_pos_rel_3d
     t = 0
-    while not done:
+    obs_prev = copy.deepcopy(obs)
+    env.render()
+    # while not done:
+    while t<20:
         # print(t)
         t+=1
         a = env.action_space.sample()
-        # a[:] = 0
-        # a[1] = 1
+        a[:] = 0
+        # if t<5:
+        a[1] = -0.5
 # # ---------- getting env name ---------- #
 # # env_dict = gym.envs.registry.all()
 # # for k in env_dict:
@@ -55,8 +60,12 @@ for episode in range(10):
 # # EnvSpec(FetchPushDense-v1)
 #         a = p_controller(obs)
 #         # ic(a.round(2),obs.round(2))
+        # input()
         obs,rew,done,info = env.step(a)
-        print(obs.round(2))
+        # diff = obs-obs_prev
+        # obs_prev = copy.deepcopy(obs)
+        # ic((diff*100).round(2))
+        ic(obs)
         # print(env.T)
 #         r_total += rew
 #         # print(np.round(obs,2))
@@ -65,5 +74,6 @@ for episode in range(10):
         # obs = obs['observation']
         # ic(obs[6:9], obs[11:14])
         env.render()
+        
         # time.sleep(0.1)
 # print(r_total/10)

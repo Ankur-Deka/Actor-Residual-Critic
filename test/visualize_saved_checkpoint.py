@@ -16,6 +16,7 @@ import datetime
 import dateutil.tz
 import json
 
+
 def evaluate_policy(policy, env, n_episodes, deterministic=False):
     obs_dim = env.observation_space.shape[0]
     act_dim = env.action_space.shape[0]
@@ -33,11 +34,17 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
         done = False
         stored_terminal_rew = False
         # while not done and t<env_T:
+        obs_arr = np.zeros((20,4))
+        action_arr = np.zeros((20,2))
         while t<env_T:
             # print(t)
             action = policy(obs, deterministic)
+            print(obs, action)
+            obs_arr[t,:] = obs
+            action_arr[t,:] = action
             # action = np.array([1,0])
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
+            
             if done:
                 rew = 0 if stored_terminal_rew else rew
                 stored_terminal_rew = True
@@ -46,8 +53,12 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
             ret += rew
             t += 1
             env.render()
+            # input()
             # time.sleep(0.1)
-            
+
+        np.savetxt('simulator_obs_fmax.csv', obs_arr.round(3), delimiter=',')
+        np.savetxt('simulator_action_fmax.csv', action_arr.round(3), delimiter=',')
+        
             # t_max = max(t_max,t)
         returns.append(ret)
 
@@ -59,11 +70,17 @@ if __name__ == "__main__":
     # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs/PlanarReachGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_18_01_57_16'
     # config_file = 'variant_21139.yml'
     # ckpt_file = 'env_steps_9000.pt'
+    # ---------- arc-fmax
     root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_19_01_06_32'
     config_file = 'variant_44973.yml'
-    ckpt_file = 'env_steps_26000.pt'
-    v = yaml.load(open(os.path.join(root_dir,config_file)))
+    ckpt_file = 'env_steps_500000.pt'
 
+    # # ---------- fmax
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/f-max-rkl/2021_08_19_01_52_10'
+    # config_file = 'variant_51349.yml'
+    # ckpt_file = 'env_steps_500000.pt'
+
+    v = yaml.load(open(os.path.join(root_dir,config_file)))
     # common parameters
     env_name = v['env']['env_name']
     env_T = v['env']['T']

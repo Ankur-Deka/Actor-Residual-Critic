@@ -102,7 +102,7 @@ class FetchFH(MujocoFH):
         self.terminal_state = None
         obs = self.env.reset()
         # self.obs = self.normalize_obs(self.obs)
-        goal_pos_rel = np.array([0.15,0]) + np.random.normal(scale=0.01, size=2)
+        goal_pos_rel = np.array([0.15,0])# + np.random.normal(scale=0.01, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
         # ic(self.env.goal)
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
@@ -156,7 +156,7 @@ class PushFH(MujocoFH):
         object_pos_rel = obs['observation'][6:8]
         return object_pos_rel
 
-    def reset(self):
+    def reset(self):    
         self.t = 0
         self.terminated = False
         self.terminal_state = None
@@ -170,7 +170,7 @@ class PushFH(MujocoFH):
         self.object_initial_pos = object_qpos[:2]
         # ---------- set goal position ---------- #
         goal_pos_rel = np.array([0,-0.3]) + np.random.normal(scale=0.01, size=2)
-        goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
+        goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0.01]))
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
         self.goal = self.env.env.goal[:2]
 

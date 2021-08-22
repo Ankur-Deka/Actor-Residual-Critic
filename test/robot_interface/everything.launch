@@ -1,6 +1,0 @@
-<launch>
-	<!-- robot -->
-    <!-- include file="~/catkin_ws/src/kinova-ros/my_scripts/real_robot_moveit_rviz.launch"/ -->
-
-    <!-- 
-</launch>
