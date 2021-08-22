@@ -34,8 +34,8 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
         done = False
         stored_terminal_rew = False
         # while not done and t<env_T:
-        obs_arr = np.zeros((20,4))
-        action_arr = np.zeros((20,2))
+        obs_arr = np.zeros((env_T,4))
+        action_arr = np.zeros((env_T,2))
         while t<env_T:
             # print(t)
             action = policy(obs, deterministic)
@@ -56,8 +56,8 @@ def evaluate_policy(policy, env, n_episodes, deterministic=False):
             # input()
             # time.sleep(0.1)
 
-        np.savetxt('simulator_obs_fmax.csv', obs_arr.round(3), delimiter=',')
-        np.savetxt('simulator_action_fmax.csv', action_arr.round(3), delimiter=',')
+        # np.savetxt('simulator_obs_fmax.csv', obs_arr.round(3), delimiter=',')
+        # np.savetxt('simulator_action_fmax.csv', action_arr.round(3), delimiter=',')
         
             # t_max = max(t_max,t)
         returns.append(ret)
@@ -70,20 +70,36 @@ if __name__ == "__main__":
     # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs/PlanarReachGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_18_01_57_16'
     # config_file = 'variant_21139.yml'
     # ckpt_file = 'env_steps_9000.pt'
-    # ---------- arc-fmax
-    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_19_01_06_32'
-    config_file = 'variant_44973.yml'
-    ckpt_file = 'env_steps_500000.pt'
+
+    # # ---------- arc-fmax
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_19_01_06_32'
+    # config_file = 'variant_44973.yml'
+    # ckpt_file = 'env_steps_500000.pt'
 
     # # ---------- fmax
     # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/f-max-rkl/2021_08_19_01_52_10'
     # config_file = 'variant_51349.yml'
     # ckpt_file = 'env_steps_500000.pt'
 
+    # ---------- new friction values ---------- #
+    # ---------- arc-fmax
+    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_22_17_34_36'
+    config_file = 'variant_13588.yml'
+    ckpt_file = 'env_steps_20000.pt'
+
+    # ---------- fmax
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/f-max-rkl/2021_08_22_17_36_04'
+    # config_file = 'variant_14127.yml'
+    # ckpt_file = 'env_steps_20000.pt'
+
+
+    
+
     v = yaml.load(open(os.path.join(root_dir,config_file)))
     # common parameters
     env_name = v['env']['env_name']
     env_T = v['env']['T']
+    env_T = 20
     state_indices = v['env']['state_indices']
     seed = v['seed']
     num_expert_trajs = v['irl']['expert_episodes']

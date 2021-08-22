@@ -5,7 +5,7 @@ cuda: -1
 experiment_tag: 32_traj_10_resample_seed_2
 env:
   env_name: PlanarReachGoal1DenseFH-v0 # AntFH-v0, Walker2dFH-v0, HopperFH-v0
-  T: 20
+  T: 30
   state_indices: all
 irl:
   training_trajs: 10
