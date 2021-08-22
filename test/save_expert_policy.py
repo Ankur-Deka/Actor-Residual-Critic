@@ -122,7 +122,6 @@ if __name__ == "__main__":
 
     
     log_txt = open(f"expert_data/meta/{env_name}_{seed}.txt", 'w')
-    log_txt.write(return_info + '\n')
     
     # sns.violinplot(data=expert_returns, ax=axs[1])
     # axs[1].set_title("violin plot of expert return")
