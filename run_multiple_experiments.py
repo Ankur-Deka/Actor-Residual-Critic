@@ -11,7 +11,7 @@ seeds = [0,1,2,3,4]
 # seeds = [0]
 # envs = ['Walker2dFH-v0', 'HopperFH-v0', 'AntFH-v0']
 algos = ['arc-f-max-rkl', 'arc-gail']
-envs = ['PlanarPushGoal1DenseFH-v0']
+envs = ['PlanarReachGoal1DenseFH-v0']
 process_list = []
 
 def run_experiment():
