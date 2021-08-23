@@ -11,7 +11,7 @@ irl:
   training_trajs: 10
   n_itrs: 1500
   save_interval: 0
-  eval_episodes: 2
+  eval_episodes: 20
   expert_episodes: 64
   resample_episodes: 10
 bc:
@@ -71,7 +71,7 @@ critic:
   iter: 1200
 adv_irl: # https://github.com/KamyarGh/rl_swiss/blob/master/exp_specs/adv_irl.yaml
   normalize: false #true
-  num_epochs: 10000
+  num_epochs: 1000
   num_steps_per_epoch: 1000
   num_steps_between_train_calls: 20
   min_steps_before_training: 100
