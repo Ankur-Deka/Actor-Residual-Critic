@@ -20,8 +20,7 @@ def unpack(s):
 def remove_nan(raw_data):
     return raw_data[~np.isnan(raw_data)]
 
-root_dir = 'logs_ava'
-log_interval = 1e3
+
 
 # --------------------------------------------------------------------
 
@@ -100,6 +99,34 @@ log_interval = 1e3
 
 exp_list = \
 [
+{'env_name': 'PlanarReachGoal1DenseFH-v0',
+'plot_name': 'FetchReach',
+'exp_runs': {
+    'arc-gail': ['2021_08_23_02_21_20',
+                 '2021_08_23_02_21_22',
+                 '2021_08_23_02_21_24',
+                 '2021_08_23_02_21_26',
+                 '2021_08_23_02_21_28'],
+
+    'gail': ['2021_08_23_02_23_12',
+             '2021_08_23_02_23_14',
+             '2021_08_23_02_23_16',
+             '2021_08_23_02_23_18',
+             '2021_08_23_02_23_20'],
+
+    'arc-f-max-rkl': ['2021_08_23_02_21_10',
+                      '2021_08_23_02_21_12',
+                      '2021_08_23_02_21_14',
+                      '2021_08_23_02_21_16',
+                      '2021_08_23_02_21_18'],
+
+    'f-max-rkl': ['2021_08_23_02_23_02',
+                  '2021_08_23_02_23_04',
+                  '2021_08_23_02_23_06',
+                  '2021_08_23_02_23_08',
+                  '2021_08_23_02_23_10'],
+    },
+'max_steps': 25000},
 {'env_name': 'PlanarPushGoal1DenseFH-v0',
 'plot_name': 'FetchPush',
 'exp_runs': {
@@ -130,7 +157,8 @@ exp_list = \
 'max_steps': 25000}
 ]
 
-
+root_dir = 'logs_ava'
+log_interval = 1e3
 # -----------------------------------------------------------------------
 algo_ids = [
             # 'expert',
@@ -169,6 +197,7 @@ means = []
 stds = []
 
 for exp in exp_list:
+    
     env_name = exp['env_name']
     plot_name = exp['plot_name']
     exp_runs = exp['exp_runs']
@@ -189,7 +218,7 @@ for exp in exp_list:
     plt.figure()
     mean = []
     std = []
-
+    ic(env_name)
     for algo in algo_ids:
         if algo == 'expert':
             continue
@@ -235,10 +264,9 @@ for exp in exp_list:
     means.append(mean)
     stds.append(std)
 
-    plt.ticklabel_format(axis="both", style="sci", scilimits=(0,0))
-    # plt.rcParams.update({'font.size': 12})
-    # plt.tick_params(axis='both', which='major', labelsize=20)
-    # plt.tick_params(axis='both', which='minor', labelsize=20)
+    plt.rcParams.update({'font.size': 12})
+    plt.tick_params(axis='both', which='major', labelsize=20)
+    plt.tick_params(axis='both', which='minor', labelsize=20)
     # plt.axhline(y=expert_return, linestyle='--', color=colors['expert'], label='expert')
     plt.grid()
     plt.title(plot_name, fontsize=28)
@@ -247,6 +275,10 @@ for exp in exp_list:
     plt.tight_layout()
     if not os.path.exists('results'):
         os.makedirs('results')
+
+    plt.ticklabel_format(axis="both", style="sci", scilimits=(0,0))
+    # plt.subplots_adjust(top = 1, bottom = 0, right = 1, left = 0, hspace = 0, wspace = 0)
+    # plt.margins(0,0)
     plt.savefig(os.path.join('results', '{}.pdf'.format(env_name)))
     # plt.show()    
 
@@ -264,7 +296,8 @@ for alg_id in algo_ids:
     lines.append(ax.plot([1,2],[1,2],linestyle=style,c=color)[0])
     labels.append(name)
 
-# fig_legend.legend(lines, labels, loc='center', frameon=False, ncol=4)
+fig_legend.legend(lines, labels, loc='center', frameon=False, ncol=1)
+# fig_legend.savefig(os.path.join('results', f'{"legend_planar_fetch"}.pdf'))
 # plt.show()
 # fig_legend.show()
 
@@ -276,7 +309,7 @@ table_string = ''
 for algo in range(4):
     alg_id = algo_ids[algo]
     table_string += f'{algo_names[alg_id]} & '
-    for env in range(1):
+    for env in range(2):
         mean = means[env, algo]
         std = stds[env,algo]
         if alg_id in ['arc-f-max-rkl', 'arc-gail']:

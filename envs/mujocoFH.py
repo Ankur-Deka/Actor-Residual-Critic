@@ -79,8 +79,8 @@ class MujocoFH(gym.Env):
             obs = (obs - self.obs_mean) / self.obs_std
         return obs
 
-    def render(self):
-        self.env.render()
+    def render(self, *args, **kwargs):
+        return self.env.render(*args, **kwargs)
 
 
 class FetchFH(MujocoFH):
@@ -102,7 +102,7 @@ class FetchFH(MujocoFH):
         self.terminal_state = None
         obs = self.env.reset()
         # self.obs = self.normalize_obs(self.obs)
-        goal_pos_rel = np.array([0.15,-0.15]) + np.random.normal(scale=0.0001, size=2)
+        goal_pos_rel = np.array([0.15,-0.15])# + np.random.normal(scale=0.0001, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0]))
         # ic(self.env.goal)
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
@@ -165,11 +165,11 @@ class PushFH(MujocoFH):
         gripper_pos = self.env.initial_gripper_xpos[:2]
         # ---------- set object position ---------- #
         object_qpos = self.env.env.sim.data.get_joint_qpos('object0:joint')
-        object_qpos[:2] = gripper_pos + [0,-0.1] + np.random.normal(scale=0.0001, size=2)
+        object_qpos[:2] = gripper_pos + [0,-0.1]# + np.random.normal(scale=0.0001, size=2)
         self.env.env.sim.data.set_joint_qpos('object0:joint', object_qpos)
         self.object_initial_pos = object_qpos[:2]
         # ---------- set goal position ---------- #
-        goal_pos_rel = np.array([0,-0.3]) + np.random.normal(scale=0.0001, size=2)
+        goal_pos_rel = np.array([0,-0.3])# + np.random.normal(scale=0.0001, size=2)
         goal_pos_rel_3d = np.concatenate((goal_pos_rel, [0.01]))
         self.env.env.goal = self.env.initial_gripper_xpos[:3] + goal_pos_rel_3d
         self.goal = self.env.env.goal[:2]

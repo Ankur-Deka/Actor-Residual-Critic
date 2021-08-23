@@ -9,7 +9,9 @@ import copy
 # for name in names:
 #     print(name)
 
-env = gym.make('PlanarPushGoal1DenseFH-v0', T=10)
+env_name = 'PlanarPushGoal1DenseFH-v0'
+
+env = gym.make(env_name, T=50)
 
 
 # print(env.__dict__)
@@ -20,7 +22,7 @@ env = gym.make('PlanarPushGoal1DenseFH-v0', T=10)
 #     return action
 
 r_total = 0
-for episode in range(10):
+for episode in range(1):
     ic(episode)
     obs = env.reset()
     done = False
@@ -38,14 +40,19 @@ for episode in range(10):
     t = 0
     obs_prev = copy.deepcopy(obs)
     env.render()
+    obs_arr = np.zeros((20,env.observation_space.shape[0]))
     # while not done:
     while t<20:
-        # print(t)
-        t+=1
+        print(t)
         a = env.action_space.sample()
-        a[:] = 0
+        # a[:] = 0
         # if t<5:
-        a[1] = -0.5
+        if env_name == 'PlanarReachGoal1DenseFH-v0':
+            a[0] = 0.5
+            a[1] = -0.5
+        elif env_name == 'PlanarPushGoal1DenseFH-v0':
+            a[0] = 0
+            a[1] = -0.5
 # # ---------- getting env name ---------- #
 # # env_dict = gym.envs.registry.all()
 # # for k in env_dict:
@@ -62,6 +69,7 @@ for episode in range(10):
 #         # ic(a.round(2),obs.round(2))
         # input()
         obs,rew,done,info = env.step(a)
+        obs_arr[t,:] = obs
         # diff = obs-obs_prev
         # obs_prev = copy.deepcopy(obs)
         # ic((diff*100).round(2))
@@ -74,6 +82,9 @@ for episode in range(10):
         # obs = obs['observation']
         # ic(obs[6:9], obs[11:14])
         env.render()
+        time.sleep(0.1)
+        t+=1
+    print(obs_arr)
+    np.savetxt(f'test/observation_space_{env_name}.csv', obs_arr, delimiter=',')
         
-        # time.sleep(0.1)
 # print(r_total/10)

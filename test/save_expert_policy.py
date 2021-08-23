@@ -75,10 +75,10 @@ def evaluate_policy(policy, env, n_episodes):
         # while not done and t<env_T:
         while t<env_T:
             # ---------- reach task
-            action = policy(obs)
+            # action = policy(obs)
 
             # ---------- push task
-            # action = policy(env,obs,t)
+            action = policy(env,obs,t)
             # action[:] = 0
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
             if done:
@@ -119,30 +119,31 @@ if __name__ == "__main__":
         EnvCls = lambda : gym.make(env_name, T=env_T)
     
     # ---------- reach task
-    policy = p_controller
+    # policy = p_controller
 
     # ---------- push task
-    # policy = hand_coded_push_policy
+    policy = hand_coded_push_policy
     env = EnvCls()
     env.seed(seed+1)
 
     
-    log_txt = open(f"expert_data/meta/{env_name}_{seed}.txt", 'w')
+    # log_txt = open(f"expert_data/meta/{env_name}_{seed}.txt", 'w')
     
     # sns.violinplot(data=expert_returns, ax=axs[1])
     # axs[1].set_title("violin plot of expert return")
     # plt.savefig(os.path.join(f'expert_data/meta/{env_name}_{seed}.png')) 
 
-    expert_states_det, expert_actions_det, expert_returns = evaluate_policy(policy, env, v['expert']['samples_episode'])
-    return_info = f'Expert(Det) Return Avg: {expert_returns.mean():.2f}, std: {expert_returns.std():.2f}'
-    print(return_info)
-    log_txt.write(return_info + '\n')
-    log_txt.write(repr(expert_returns)+'\n')
-    log_txt.write(repr(v))
-    os.makedirs('expert_data/states/', exist_ok=True)
-    os.makedirs('expert_data/actions/', exist_ok=True)
-    torch.save(expert_states_det, f'expert_data/states/{env_name}_det.pt')
-    torch.save(expert_states_det, f'expert_data/states/{env_name}_airl.pt')
+    expert_states_det, expert_actions_det, expert_returns = evaluate_policy(policy, env, 1)
+    print(expert_actions_det)
+    # return_info = f'Expert(Det) Return Avg: {expert_returns.mean():.2f}, std: {expert_returns.std():.2f}'
+    # print(return_info)
+    # log_txt.write(return_info + '\n')
+    # log_txt.write(repr(expert_returns)+'\n')
+    # log_txt.write(repr(v))
+    # os.makedirs('expert_data/states/', exist_ok=True)
+    # os.makedirs('expert_data/actions/', exist_ok=True)
+    # torch.save(expert_states_det, f'expert_data/states/{env_name}_det.pt')
+    # torch.save(expert_states_det, f'expert_data/states/{env_name}_airl.pt')
 
-    torch.save(expert_actions_det, f'expert_data/actions/{env_name}_det.pt')
-    torch.save(expert_actions_det, f'expert_data/actions/{env_name}_airl.pt')
+    # torch.save(expert_actions_det, f'expert_data/actions/{env_name}_det.pt')
+    # torch.save(expert_actions_det, f'expert_data/actions/{env_name}_airl.pt')
