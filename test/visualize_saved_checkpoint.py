@@ -83,23 +83,31 @@ if __name__ == "__main__":
 
     # ---------- new friction values ---------- #
     # ---------- arc-fmax
-    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_22_17_34_36'
-    config_file = 'variant_13588.yml'
-    ckpt_file = 'env_steps_20000.pt'
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_22_17_34_36'
+    # config_file = 'variant_13588.yml'
+    # ckpt_file = 'env_steps_20000.pt'
 
     # ---------- fmax
     # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/f-max-rkl/2021_08_22_17_36_04'
     # config_file = 'variant_14127.yml'
     # ckpt_file = 'env_steps_20000.pt'
 
-
+    # ---------- new friction, longer time horizon ----------
+    # ---------- arc-fmax
+    # root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/arc-f-max-rkl/2021_08_22_18_55_55'
+    # config_file = 'variant_25493.yml'
+    # ckpt_file = 'env_steps_20000.pt'
     
+    # ---------- fmax
+    root_dir = '/home/ankur/MSR_Research_Home/Actor-Residual-Critic/logs_ava/PlanarPushGoal1DenseFH-v0/exp-64/f-max-rkl/2021_08_22_18_56_48'
+    config_file = 'variant_25962.yml'
+    ckpt_file = 'env_steps_20000.pt'
 
     v = yaml.load(open(os.path.join(root_dir,config_file)))
     # common parameters
     env_name = v['env']['env_name']
     env_T = v['env']['T']
-    env_T = 20
+    # env_T = 30
     state_indices = v['env']['state_indices']
     seed = v['seed']
     num_expert_trajs = v['irl']['expert_episodes']

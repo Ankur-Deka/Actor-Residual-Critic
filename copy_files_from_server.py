@@ -60,7 +60,7 @@ for exp in exp_list:
             command = f'{command_prefix}/progress.csv {command_postfix}/'
             run_command(command)
 
-            # yml
+            # config
             command = f'{command_prefix}/*.yml {command_postfix}/'
             run_command(command)         
 # scp ankur@ava.ri.cmu.edu:MSR_Research/Actor-Residual-Critic/

@@ -7,7 +7,7 @@ file = open(fPath)
 lines = file.readlines()
 file.close()
 
-seeds = [0]
+seeds = [0,1,2,3,4]
 # seeds = [0]
 # envs = ['Walker2dFH-v0', 'HopperFH-v0', 'AntFH-v0']
 algos = ['arc-f-max-rkl', 'arc-gail']
