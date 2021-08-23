@@ -13,7 +13,7 @@ import time
 
 
 
-def p_controller(obs, gain=30, max_val=1):
+def p_controller(obs, gain=10, max_val=1):
     action = np.clip(gain*obs, -max_val, max_val)
     return action
 
@@ -74,8 +74,11 @@ def evaluate_policy(policy, env, n_episodes):
         print(env.goal)
         # while not done and t<env_T:
         while t<env_T:
-            # action = policy(obs)
-            action = policy(env,obs,t)
+            # ---------- reach task
+            action = policy(obs)
+
+            # ---------- push task
+            # action = policy(env,obs,t)
             # action[:] = 0
             obs, rew, done, _ = env.step(action) # NOTE: assume rew=0 after done=True for evaluation
             if done:
@@ -115,8 +118,11 @@ if __name__ == "__main__":
     else: 
         EnvCls = lambda : gym.make(env_name, T=env_T)
     
-    # policy = p_controller
-    policy = hand_coded_push_policy
+    # ---------- reach task
+    policy = p_controller
+
+    # ---------- push task
+    # policy = hand_coded_push_policy
     env = EnvCls()
     env.seed(seed+1)
 
